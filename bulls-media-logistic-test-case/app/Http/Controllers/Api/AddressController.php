@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePackageRequest;
-use App\Http\Requests\UpdatePackageRequest;
-use App\Models\Package;
+use App\Http\Requests\StoreAddressRequest;
+use App\Http\Requests\UpdateAddressRequest;
+use App\Models\Address;
 
-class PackageController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class PackageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePackageRequest $request)
+    public function store(StoreAddressRequest $request)
     {
         //
     }
@@ -28,7 +28,7 @@ class PackageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Package $package)
+    public function show(Address $address)
     {
         //
     }
@@ -36,7 +36,7 @@ class PackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePackageRequest $request, Package $package)
+    public function update(UpdateAddressRequest $request, Address $address)
     {
         //
     }
@@ -44,7 +44,7 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Package $package)
+    public function destroy(Address $address)
     {
         //
     }
