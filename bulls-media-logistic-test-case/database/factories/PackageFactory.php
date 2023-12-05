@@ -17,7 +17,16 @@ class PackageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'width' => $this->faker->randomFloat(2, 1, 100),
+            'height' => $this->faker->randomFloat(2, 1, 100),
+            'length' => $this->faker->randomFloat(2, 1, 100),
+            'weight' => $this->faker->randomFloat(2, 1, 100),
+            'type' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'width_unit' => $this->faker->randomElement(['cm', 'in', 'm']),
+            'height_unit' => $this->faker->randomElement(['cm', 'in', 'm']),
+            'length_unit' => $this->faker->randomElement(['cm', 'in', 'm']),
+            'weight_unit' => $this->faker->randomElement(['kg', 'lb']),
         ];
     }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDeliveryRequest;
 use App\Http\Requests\UpdateDeliveryRequest;
 use App\Models\Delivery;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class DeliveryController extends Controller
 {
@@ -14,7 +16,13 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        //
+        /**
+         * @var User
+         */
+        $user = auth()->user();
+        return response(
+            $user->deliveries
+        );
     }
 
     /**
@@ -22,7 +30,15 @@ class DeliveryController extends Controller
      */
     public function store(StoreDeliveryRequest $request)
     {
-        //
+        $delivery = new Delivery($request->only( 'package_id', 'address_id', 'delivery_provider'));
+        $delivery->user()->associate(auth()->user());
+        try {
+            $delivery->saveOrFail();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response('Bad request', 400);
+        }
+        return response('The delivery created successful', 201);
     }
 
     /**
@@ -30,7 +46,7 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-        //
+        return response($delivery);
     }
 
     /**
@@ -38,7 +54,13 @@ class DeliveryController extends Controller
      */
     public function update(UpdateDeliveryRequest $request, Delivery $delivery)
     {
-        //
+        try {
+            $delivery->updateOrFail($request->only('package_id', 'address_id', 'delivery_provider'));
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response('Bad request', 400);
+        }
+        return response('The delivery updated successful', 200);
     }
 
     /**
@@ -46,6 +68,12 @@ class DeliveryController extends Controller
      */
     public function destroy(Delivery $delivery)
     {
-        //
+        try {
+            $delivery->delete();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response('Bad request', 400);
+        }
+        return response('Delivery deleted successful', 204);
     }
 }
