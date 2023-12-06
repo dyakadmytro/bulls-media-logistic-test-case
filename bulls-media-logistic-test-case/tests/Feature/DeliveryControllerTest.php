@@ -59,7 +59,7 @@ it('updates an delivery successfully', function () {
         'address_id' => $address->id,
     ]);
     $updatedData = [
-        'delivery_provider' => 'oldposta',
+        'delivery_provider' => 'oldposhta',
     ];
 
     $response = $this->actingAs($user)->putJson("/api/delivery/{$delivery->id}", $updatedData);

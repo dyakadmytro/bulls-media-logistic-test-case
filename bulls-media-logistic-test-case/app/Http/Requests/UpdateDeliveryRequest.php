@@ -22,7 +22,9 @@ class UpdateDeliveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'package_id' => 'exists:packages,id',
+            'address_id' => 'exists:addresses,id',
+            'delivery_provider' => 'in:novaposhta,oldposhta',
         ];
     }
 }

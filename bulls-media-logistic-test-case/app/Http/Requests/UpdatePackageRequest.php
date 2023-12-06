@@ -22,7 +22,16 @@ class UpdatePackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'width' => 'regex:/^\d+(\.\d{1,2})?$/',
+            'height' => 'regex:/^\d+(\.\d{1,2})?$/',
+            'length' => 'regex:/^\d+(\.\d{1,2})?$/',
+            'weight' => 'regex:/^\d+(\.\d{1,2})?$/',
+            'type' => 'string|min:3|max:64',
+            'description' => 'string|min:3|max:255',
+            'width_unit' => 'exists:units,name',
+            'height_unit' => 'exists:units,name',
+            'length_unit' => 'exists:units,name',
+            'weight_unit' => 'exists:units,name',
         ];
     }
 }

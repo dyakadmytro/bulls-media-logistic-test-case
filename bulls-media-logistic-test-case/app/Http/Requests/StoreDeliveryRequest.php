@@ -22,7 +22,9 @@ class StoreDeliveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'package_id' => 'required|exists:packages,id',
+            'address_id' => 'required|exists:addresses,id',
+            'delivery_provider' => 'required|in:novaposhta',
         ];
     }
 }
