@@ -4,8 +4,8 @@ use App\Models\User;
 use App\Models\Package;
 use App\Models\Address;
 use App\Models\Delivery;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use \Illuminate\Support\Facades\Bus;
+use App\Jobs\CreateExternalDeliveryJob;
 
 it('lists all deliveries', function () {
     $user = User::factory()->create();
@@ -32,6 +32,9 @@ it('displays a specific delivery', function () {
 });
 
 it('successfully creates a delivery', function () {
+    Bus::fake([
+        CreateExternalDeliveryJob::class
+    ]);
     $user = User::factory()->create();
     $package = Package::factory()->create(['user_id' => $user]);
     $address = Address::factory()->create(['user_id' => $user]);
@@ -42,7 +45,7 @@ it('successfully creates a delivery', function () {
     ];
 
     $response = $this->actingAs($user)->postJson('/api/delivery', $data);
-
+    Bus::assertDispatched(CreateExternalDeliveryJob::class);
     $response->assertStatus(201);
 });
 

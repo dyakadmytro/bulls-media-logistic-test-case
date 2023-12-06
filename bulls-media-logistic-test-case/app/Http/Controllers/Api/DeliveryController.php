@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDeliveryRequest;
 use App\Http\Requests\UpdateDeliveryRequest;
+use App\Jobs\CreateExternalDeliveryJob;
 use App\Models\Delivery;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class DeliveryController extends Controller
@@ -38,6 +40,8 @@ class DeliveryController extends Controller
             Log::error($e->getMessage());
             return response('Bad request', 400);
         }
+        $delivery_service = App::make('delivery.'.$delivery->delivery_provider);
+        CreateExternalDeliveryJob::dispatch($delivery, $delivery_service);
         return response('The delivery created successful', 201);
     }
 
